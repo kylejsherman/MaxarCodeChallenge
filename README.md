@@ -50,7 +50,7 @@ Guidance:
 ### No Intersection
 
 test
-`https apigatway/polygon_intersect < grapids_denver.json`
+`https apigatewayendpoint/polygon_intersect < grapids_denver.json`
 
 response
 `{"PolygonsIntersect": false}`
@@ -60,9 +60,15 @@ response
 ### Intersection
 
 test
-`https apigatway/polygon_intersect < grapids_detroit.json`
+`https apigatewayendpoint/polygon_intersect < grapids_detroit.json`
 
 response
 `{"PolygonsIntersect": true}`
 
 ![GeoJson No Intersection](testImages/Intersection.png)
+
+## Future Work
+
+1. Automate the deployment process
+2. Provide automatice documentation of python methods using Sphinx
+3. Review IAM permission to ensure least privilage
