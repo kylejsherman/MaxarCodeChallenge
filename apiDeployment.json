@@ -1,0 +1,166 @@
+{
+    "Outputs": {
+        "ApiInformation": {
+            "Description": "Enpoint address for this stage of the API",
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        {
+                            "Ref": "JsonCompareAPI"
+                        },
+                        ".execute-api.us-east-1.amazonaws.com/",
+                        "v1",
+                        "/polygon_intersect"
+                    ]
+                ]
+            }
+        }
+    },
+    "Resources": {
+        "JsonCompareAPI": {
+            "Properties": {
+                "Name": "JsonCompareAPI"
+            },
+            "Type": "AWS::ApiGateway::RestApi"
+        },
+        "JsonCompareFunction": {
+            "DependsOn": "jsonCompareLambdaExecutionRole",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": "code-challenge-deployment-bucket",
+                    "S3Key": "jsonCompareLambdaPackage.zip"
+                },
+                "FunctionName": "JsonCompareFunction",
+                "Handler": "jsonCompare.polygon_intersect",
+                "Role": {
+                    "Fn::GetAtt": [
+                        "jsonCompareLambdaExecutionRole",
+                        "Arn"
+                    ]
+                },
+                "Runtime": "python3.8"
+            },
+            "Type": "AWS::Lambda::Function"
+        },
+        "Stagev1": {
+            "Properties": {
+                "DeploymentId": {
+                    "Ref": "TestDeployment"
+                },
+                "RestApiId": {
+                    "Ref": "JsonCompareAPI"
+                },
+                "StageName": "v1"
+            },
+            "Type": "AWS::ApiGateway::Stage"
+        },
+        "TestDeployment": {
+            "DependsOn": "jsonCompareLambdaMethod",
+            "Properties": {
+                "RestApiId": {
+                    "Ref": "JsonCompareAPI"
+                }
+            },
+            "Type": "AWS::ApiGateway::Deployment"
+        },
+        "jsonCompareLambdaExecutionRole": {
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                ],
+                "RoleName": "jsonCompareLambdaExecutionRole"
+            },
+            "Type": "AWS::IAM::Role"
+        },
+        "jsonCompareLambdaInvokePermission": {
+            "DependsOn": "JsonCompareFunction",
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Fn::GetAtt": [
+                        "JsonCompareFunction",
+                        "Arn"
+                    ]
+                },
+                "Principal": "apigateway.amazonaws.com"
+            },
+            "Type": "AWS::Lambda::Permission"
+        },
+        "jsonCompareLambdaMethod": {
+            "DependsOn": "JsonCompareFunction",
+            "Properties": {
+                "ApiKeyRequired": false,
+                "AuthorizationType": "NONE",
+                "HttpMethod": "POST",
+                "Integration": {
+                    "IntegrationHttpMethod": "POST",
+                    "IntegrationResponses": [
+                        {
+                            "StatusCode": "200"
+                        }
+                    ],
+                    "Type": "AWS",
+                    "Uri": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                                {
+                                    "Fn::GetAtt": [
+                                        "JsonCompareFunction",
+                                        "Arn"
+                                    ]
+                                },
+                                "/invocations"
+                            ]
+                        ]
+                    }
+                },
+                "MethodResponses": [
+                    {
+                        "StatusCode": "200"
+                    }
+                ],
+                "ResourceId": {
+                    "Ref": "jsonCompareLambdaResource"
+                },
+                "RestApiId": {
+                    "Ref": "JsonCompareAPI"
+                }
+            },
+            "Type": "AWS::ApiGateway::Method"
+        },
+        "jsonCompareLambdaResource": {
+            "DependsOn": "JsonCompareAPI",
+            "Properties": {
+                "ParentId": {
+                    "Fn::GetAtt": [
+                        "JsonCompareAPI",
+                        "RootResourceId"
+                    ]
+                },
+                "PathPart": "polygon_intersect",
+                "RestApiId": {
+                    "Ref": "JsonCompareAPI"
+                }
+            },
+            "Type": "AWS::ApiGateway::Resource"
+        }
+    }
+}

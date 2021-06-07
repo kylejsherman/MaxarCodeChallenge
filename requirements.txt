@@ -1,0 +1,6 @@
+cfn-flip==1.2.3
+click==8.0.1
+PyYAML==5.4.1
+Shapely==1.7.1
+six==1.16.0
+troposphere==2.7.1

@@ -19,20 +19,23 @@ template = Template()
 # Create Lambda execution role
 template.add_resource(
     Role(
-        "jsonCompareLambdaExecutionRole",
+        'jsonCompareLambdaExecutionRole',
         RoleName='jsonCompareLambdaExecutionRole',
         AssumeRolePolicyDocument={
-            "Version": "2012-10-17",
-            "Statement": [
+            'Version': '2012-10-17',
+            'Statement': [
                 {
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Service": ["lambda.amazonaws.com"]
+                    'Effect': 'Allow',
+                    'Principal': {
+                        'Service': ['lambda.amazonaws.com']
                     },
-                    "Action": "sts:AssumeRole"
+                    'Action': 'sts:AssumeRole'
                 }
             ]
-        }
+        },
+        ManagedPolicyArns=[
+            'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        ]
     )
 )
 
@@ -73,7 +76,8 @@ rest_api = template.add_resource(
 # Create an API resource
 api_resource = template.add_resource(
     Resource(
-        "jsonCompareLambdaResource",
+        'jsonCompareLambdaResource',
+        DependsOn='JsonCompareAPI',
         RestApiId=Ref(rest_api),
         PathPart='polygon_intersect',
         ParentId=GetAtt('JsonCompareAPI', 'RootResourceId')
