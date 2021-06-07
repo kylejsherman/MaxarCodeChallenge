@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-80.670006, 47.963795], [-90.670006, 47.963795], [-90.670006, 37.963795], [-80.670006, 37.963795], [-80.670006, 47.963795]]
+        ]
+      },
+      "properties": {
+        "name": "Grand Rapids"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [[-99.991531, 44.742043], [-109.991531, 44.742043], [-109.991531, 34.742043], [-99.991531, 34.742043], [-99.991531, 44.742043]]
+        ]
+      },
+      "properties": {
+        "name": "Denver"
+      }
+    }
+  ]
+}
