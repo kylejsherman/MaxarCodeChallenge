@@ -45,3 +45,24 @@ Guidance:
 6. Pull the apiEndpoint form the MaxarCodeChallengeApiDeployment stack output
 7. Send POST request to apiEndpioint. Body will be one json object containing two GeoJson polygon objects
 
+## Testing
+
+### No Intersection
+
+test
+`https apigatway/polygon_intersect < grapids_denver.json`
+
+response
+`{"PolygonsIntersect": false}`
+
+![GeoJson Intersection](testImages/Intersection.png)
+
+### Intersection
+
+test
+`https apigatway/polygon_intersect < grapids_detroit.json`
+
+response
+`{"PolygonsIntersect": true}`
+
+![GeoJson No Intersection](testImages/NoIntersection.png)
