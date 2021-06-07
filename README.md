@@ -55,7 +55,7 @@ test
 response
 `{"PolygonsIntersect": false}`
 
-![GeoJson Intersection](testImages/Intersection.png)
+![GeoJson Intersection](testImages/NoIntersection.png)
 
 ### Intersection
 
@@ -65,4 +65,4 @@ test
 response
 `{"PolygonsIntersect": true}`
 
-![GeoJson No Intersection](testImages/NoIntersection.png)
+![GeoJson No Intersection](testImages/Intersection.png)
