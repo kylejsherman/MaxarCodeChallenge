@@ -67,6 +67,12 @@ response
 
 ![GeoJson No Intersection](testImages/Intersection.png)
 
+
+Fun Fact: I created GeoJSON polygons around 3 cities:
+- Grand Rapids, MI - My home town
+- Detroit, MI - Where most of my extended family lives
+- Dever, CO - Maxar Headquarters
+
 ## Future Work
 
 1. Automate the deployment process
