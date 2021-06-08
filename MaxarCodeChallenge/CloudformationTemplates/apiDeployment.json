@@ -81,6 +81,9 @@
                     ],
                     "Version": "2012-10-17"
                 },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                ],
                 "RoleName": "jsonCompareLambdaExecutionRole"
             },
             "Type": "AWS::IAM::Role"
@@ -144,6 +147,7 @@
             "Type": "AWS::ApiGateway::Method"
         },
         "jsonCompareLambdaResource": {
+            "DependsOn": "JsonCompareAPI",
             "Properties": {
                 "ParentId": {
                     "Fn::GetAtt": [
