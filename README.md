@@ -1,4 +1,4 @@
-# MaxarCodeChallenge
+# CodeChallenge
 
 ## Summary
 
