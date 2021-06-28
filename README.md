@@ -27,9 +27,9 @@ Guidance:
 |Folder|Description|
 |---|---|
 |/|Code related to repository managment|
-|/MaxarCodeChallenge|Code related to the all resources of the RestApi application|
-|/MaxarCodeChallenge/jsonCompare.py|Lambda function code that comparse two GeoJSON objects|
-|/MaxarCodeChallenge/CloudformationTemplates|Code that is used to generate the AWS infrastructure needed to deploy RestAPI|
+|/CodeChallenge|Code related to the all resources of the RestApi application|
+|/CodeChallenge/jsonCompare.py|Lambda function code that comparse two GeoJSON objects|
+|/CodeChallenge/CloudformationTemplates|Code that is used to generate the AWS infrastructure needed to deploy RestAPI|
 
 ## Deployment Steps
 1. Build jsonCompare Lambda deployment package on Amazon Linux 2 EC2 instance (lambda runs on Amazon Linux EC2 and deployment package needs to be compiled on the same hardware)
